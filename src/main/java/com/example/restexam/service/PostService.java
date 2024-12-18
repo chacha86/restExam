@@ -11,7 +11,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+
     public List<Post> getList() {
         return postRepository.findAll();
+    }
+
+    public void create(String title, String content) {
+
+        Post post = Post.builder()
+                .title(title)
+                .content(content).build();
+
+        postRepository.save(post);
     }
 }

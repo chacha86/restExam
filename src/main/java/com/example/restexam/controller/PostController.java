@@ -2,6 +2,7 @@ package com.example.restexam.controller;
 
 import com.example.restexam.entity.Post;
 import com.example.restexam.service.PostService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,19 @@ public class PostController {
     @GetMapping("")
     public List<Post> getList() {
         return postService.getList();
+    }
+
+    @Getter
+    public static class CreateReqDto {
+        private String title;
+        private String content;
+    }
+
+    @PostMapping("")
+    public String create(@RequestBody CreateReqDto createReqDto) {// json으로 넘오온 데이터를 CreateReqDto 객체로 변환해서 각 필드에 받아줌
+
+        postService.create(createReqDto.getTitle(), createReqDto.getContent());
+
+        return "포스트가 성공적으로 등록되었습니다";
     }
 }
